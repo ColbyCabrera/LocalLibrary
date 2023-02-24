@@ -7,3 +7,7 @@
 body {
   padding: 20px;
 }
+
+input[type=checkbox] {
+  margin-right: 0.4rem;
+}
