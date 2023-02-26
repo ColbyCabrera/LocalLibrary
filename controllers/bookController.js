@@ -209,7 +209,10 @@ exports.book_delete_get = (req, res, next) => {
       if (err) {
         return next(err);
       }
-
+      // No books in DB so render all books
+      if (results.book == null) {
+        res.redirect("/catalog/books");
+      }
       // Successful, so render.
       res.render("book_delete", {
         title: "Delete Book",
