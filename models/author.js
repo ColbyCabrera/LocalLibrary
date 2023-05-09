@@ -30,25 +30,68 @@ AuthorSchema.virtual("url").get(function () {
   return `/catalog/author/${this._id}`;
 });
 
-AuthorSchema.virtual("date_of_birth_formatted").get(function() {
-  return this.date_of_birth ?
-    DateTime.fromJSDate(this.date_of_birth).toLocaleString() : '';
+AuthorSchema.virtual("date_of_birth_formatted").get(function () {
+  if (this.date_of_birth) {
+    const isoDate = this.date_of_birth.toISOString(); // the ISO date string
+    const timezoneOffsetMinutes = new Date().getTimezoneOffset(); // get the timezone offset in minutes
+    const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000; // convert the offset to milliseconds
+    const adjustedDate = new Date(
+      new Date(isoDate).getTime() + timezoneOffsetMilliseconds
+    ); // adjust the date by adding the offset
+  
+    return DateTime.fromJSDate(adjustedDate).toLocaleString(DateTime.DATE_MED);
+  } else {
+    return "";
+  }
 });
 
-AuthorSchema.virtual("date_of_death_formatted").get(function() {
-  return this.date_of_death ?
-    DateTime.fromJSDate(this.date_of_death).toLocaleString() : 'Present';
+AuthorSchema.virtual("date_of_death_formatted").get(function () {
+  if (this.date_of_death) {
+    const isoDate = this.date_of_death.toISOString(); // the ISO date string
+    const timezoneOffsetMinutes = new Date().getTimezoneOffset(); // get the timezone offset in minutes
+    const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000; // convert the offset to milliseconds
+    const adjustedDate = new Date(
+      new Date(isoDate).getTime() + timezoneOffsetMilliseconds
+    ); // adjust the date by adding the offset
+  
+    return DateTime.fromJSDate(adjustedDate).toLocaleString(DateTime.DATE_MED);
+  } else {
+    return "";
+  }
 });
 
-AuthorSchema.virtual("date_of_birth_yyyy_mm_dd").get(function () {
-  return DateTime.fromJSDate(this.date_of_birth).toISODate(); // format 'YYYY-MM-DD'
+AuthorSchema.virtual("date_of_birth_formatted_iso").get(function () {
+  if (this.date_of_birth) {
+    const isoDate = this.date_of_birth.toISOString(); // the ISO date string
+    const timezoneOffsetMinutes = new Date().getTimezoneOffset(); // get the timezone offset in minutes
+    const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000; // convert the offset to milliseconds
+    const adjustedDate = new Date(
+      new Date(isoDate).getTime() + timezoneOffsetMilliseconds
+    ); // adjust the date by adding the offset
+  
+    return DateTime.fromJSDate(adjustedDate).toISODate();
+  } else {
+    return "";
+  }
 });
 
-AuthorSchema.virtual("date_of_death_yyyy_mm_dd").get(function () {
-  return DateTime.fromJSDate(this.date_of_death).toISODate(); // format 'YYYY-MM-DD';
+AuthorSchema.virtual("date_of_death_formatted_iso").get(function () {
+  if (this.date_of_death) {
+    const isoDate = this.date_of_death.toISOString(); // the ISO date string
+    const timezoneOffsetMinutes = new Date().getTimezoneOffset(); // get the timezone offset in minutes
+    const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000; // convert the offset to milliseconds
+    const adjustedDate = new Date(
+      new Date(isoDate).getTime() + timezoneOffsetMilliseconds
+    ); // adjust the date by adding the offset
+  
+    return DateTime.fromJSDate(adjustedDate).toISODate();
+  } else {
+    return "";
+  }
 });
 
-AuthorSchema.virtual("lifespan").get(function() {
+
+AuthorSchema.virtual("lifespan").get(function () {
   return this.date_of_birth_formatted + " - " + this.date_of_death_formatted;
 });
 

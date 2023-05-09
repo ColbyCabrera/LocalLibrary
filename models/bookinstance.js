@@ -21,12 +21,28 @@ BookInstanceSchema.virtual("url").get(function () {
   return `/catalog/bookinstance/${this._id}`;
 });
 
-BookInstanceSchema.virtual("due_back_formatted").get(function() {
-  return DateTime.fromJSDate(this.due_back).toLocaleString(DateTime.DATE_MED);
+BookInstanceSchema.virtual("due_back_formatted").get(function () {
+  // Offset time so dates are correct
+  const isoDate = this.due_back.toISOString(); // the ISO date string
+  const timezoneOffsetMinutes = new Date().getTimezoneOffset(); // get the timezone offset in minutes
+  const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000; // convert the offset to milliseconds
+  const adjustedDate = new Date(
+    new Date(isoDate).getTime() + timezoneOffsetMilliseconds
+  ); // adjust the date by adding the offset
+
+  return DateTime.fromJSDate(adjustedDate).toLocaleString(DateTime.DATE_MED);
 });
 
-BookInstanceSchema.virtual("due_back_yyyy_mm_dd").get(function () {
-  return DateTime.fromJSDate(this.due_back).toISODate(); // format 'YYYY-MM-DD';
+BookInstanceSchema.virtual("due_back_formatted_iso").get(function () {
+  // Offset time so dates are correct
+  const isoDate = this.due_back.toISOString(); // the ISO date string
+  const timezoneOffsetMinutes = new Date().getTimezoneOffset(); // get the timezone offset in minutes
+  const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000; // convert the offset to milliseconds
+  const adjustedDate = new Date(
+    new Date(isoDate).getTime() + timezoneOffsetMilliseconds
+  ); // adjust the date by adding the offset
+
+  return DateTime.fromJSDate(adjustedDate).toISODate();
 });
 
 // Export model

@@ -1,13 +1,23 @@
 .sidebar-nav {
-  margin-top: 5px;
+  margin-top: 20px;
   padding: 0;
   list-style: none;
 }
 
-body {
-  padding: 20px;
+ul {
+  padding: 0 1rem;
 }
 
-input[type=checkbox] {
-  margin-right: 0.4rem;
+h1 {
+  padding-top: 1rem;
+}
+
+input {
+  margin-bottom: 1rem;
+}
+
+.checkbox-input {
+  margin-right: 0.3rem;
+  position: relative;
+  top: 1px;
 }
